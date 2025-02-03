@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { TextInput, Button, Text, View, StyleSheet } from 'react-native';
+import { TextInput, Button, Text, View, StyleSheet, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase/firebaseConfig"
+import { auth } from "../config/firebase/firebaseConfig";
 import { router } from 'expo-router';
-
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -17,12 +16,15 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        router.push('/login')
+        // Show success alert and redirect to login
+        Alert.alert("Registration Success", "Your account has been created successfully!", [
+          { text: "OK", onPress: () => router.push('/login') }
+        ]);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage)
+        alert(errorMessage); // Show the error message
       });
   };
 
