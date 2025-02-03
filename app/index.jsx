@@ -21,9 +21,9 @@ export default function Index() {
   }, [])
     const logout =() =>{
       signOut(auth).then(() => {
-        alert("logout")
+        alert("logout Successfully")
       }).catch((error) => {
-        // An error happened.
+        
       });
     }
   
@@ -48,7 +48,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column', // Ensure vertical layout
+    flexDirection: 'column', 
   },
   header: {
     flexDirection: 'row',
@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
   },
   mapContainer: {
-    flex: 0.5, // 70% space for map
+    flex: 0.5, 
   },
   rideContainer: {
-    flex: 0.5, // 30% space for ride booking
-    backgroundColor: '#fff', // Optional: Add background color
+    flex: 0.5, 
+    backgroundColor: '#fff', 
   },
 });

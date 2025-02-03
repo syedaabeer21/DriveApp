@@ -10,7 +10,7 @@ export default function Map() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(true);
   const [encodedPolyline, setEncodedPolyline] = useState(null);
-  const mapRef = useRef(null); // ✅ Map reference for auto-zoom
+  const mapRef = useRef(null); // 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function Map() {
     }
   }, [location, destinationLocation]); 
 
-  // Function to decode polyline
+
   const decodePolyline = (encoded) => {
     if (!encoded) {
         console.error("Encoded polyline is empty!");
@@ -89,12 +89,12 @@ export default function Map() {
         points.push({ latitude: lat / 1e5, longitude: lng / 1e5 });
     }
 
-    console.log("Decoded Polyline Points:", points); // ✅ Debugging
+    console.log("Decoded Polyline Points:", points); // 
     return points;
 };
 
 
-  // Function to get directions
+
   const getDirection = async () => {
     if (!location || !destinationLocation) {
       console.error('Location or destination not available');
@@ -103,14 +103,14 @@ export default function Map() {
 
     const origin = `${location.coords.latitude},${location.coords.longitude}`;
     const destination = `${destinationLocation.lat},${destinationLocation.lng}`;
-    const apiKey = 'AlzaSygG7UsMwA2DOhQ5P588iErobS8CHcarI0g'; // Replace with your actual API key
+    const apiKey = 'AlzaSygG7UsMwA2DOhQ5P588iErobS8CHcarI0g'; 
     const url = `https://maps.gomaps.pro/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
 
     try {
       const response = await fetch(url);
       const json = await response.json();
       
-      console.log("Full API Response:", JSON.stringify(json, null, 2)); // ✅ Complete API response
+      console.log("Full API Response:", JSON.stringify(json, null, 2)); // 
   
       if (json.routes && json.routes.length > 0) {
           console.log("Overview Polyline:", JSON.stringify(json.routes[0].overview_polyline, null, 2));
@@ -130,7 +130,7 @@ export default function Map() {
   
   };
 
-  // Function to calculate initial region
+  
   const getInitialRegion = () => {
     if (!location) return null;
 
@@ -148,9 +148,9 @@ export default function Map() {
       {loading && <ActivityIndicator size="large" color="#00ff00" />}
       {location && (
         <MapView
-         ref={mapRef} // ✅ Assign reference for auto-zoom
+         ref={mapRef} 
           style={styles.map}
-          initialRegion={getInitialRegion()} // Set initial region to current location
+          initialRegion={getInitialRegion()} 
         >
           {/* Current Location Marker */}
           <Marker
@@ -159,7 +159,7 @@ export default function Map() {
               longitude: location.coords.longitude,
             }}
             title={'My Location'}
-            pinColor="blue" // Custom marker color
+            pinColor="red" // Custom marker color
           />
 
           {/* Destination Location Marker */}
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: '90%', // Map will take full height of its container
+    height: '90%', 
   },
   errorText: {
     color: 'red',

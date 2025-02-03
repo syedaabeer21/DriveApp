@@ -96,10 +96,10 @@ export default function RideBookingScreen() {
         const pickupAddress = await getAddressFromLatLng(currentLocation.lat, currentLocation.lng);
         const destinationAddress = await getAddressFromLatLng(selectedLocation.lat, selectedLocation.lng);
         const rideData = {
-          userId: auth.currentUser.uid, // Current logged-in user ID
-          userEmail: auth.currentUser.email, // Current logged-in user email
-          pickup: pickupAddress, // Converted address
-          destination: destinationAddress, // Converted address
+          userId: auth.currentUser.uid, 
+          userEmail: auth.currentUser.email, 
+          pickup: pickupAddress, 
+          destination: destinationAddress, 
           currentLocation: {
             lat: currentLocation.lat,
             lng: currentLocation.lng,
@@ -110,8 +110,8 @@ export default function RideBookingScreen() {
           },
           vehicleType: selectedVehicle.name,
           fare: Math.round(distance * selectedVehicle.rate),
-          status: "pending", // Default status
-          timestamp: new Date().toISOString(), // Ride booking time
+          status: "pending", 
+          timestamp: new Date().toISOString(), 
         };
         console.log("Ride Data:", rideData);
         try {
@@ -184,7 +184,7 @@ export default function RideBookingScreen() {
             <View style={styles.bookButtonContainer}>
                 <TouchableOpacity
                     style={styles.bookButton}
-                    // onPress={() => alert(`Ride booked for ${selectedVehicle ? selectedVehicle.name : 'Selected Vehicle'}`)}
+    
                     onPress={handleBookRide}
                     disabled={!selectedVehicle}
                 >
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
       flex: 1,
       padding: 20,
       backgroundColor: '#fff',
-      justifyContent: 'flex-end', // Align content to the top
+      justifyContent: 'flex-end', 
     },
     heading: {
       fontSize: 18,
