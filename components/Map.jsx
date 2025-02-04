@@ -103,7 +103,7 @@ export default function Map() {
 
     const origin = `${location.coords.latitude},${location.coords.longitude}`;
     const destination = `${destinationLocation.lat},${destinationLocation.lng}`;
-    const apiKey = 'AlzaSygG7UsMwA2DOhQ5P588iErobS8CHcarI0g'; 
+    const apiKey = 'AlzaSyFAxj_bAiwc90VRMjwmpvA2vyxENVfscPx'; 
     const url = `https://maps.gomaps.pro/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
 
     try {

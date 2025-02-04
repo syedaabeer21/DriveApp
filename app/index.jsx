@@ -6,6 +6,8 @@ import { auth } from "../config/firebase/firebaseConfig";
 import Map from "../components/Map";
 import RideScreen from "../components/RideScreen";
 import { signOut } from "firebase/auth";
+import { MaterialIcons } from "@expo/vector-icons"; // Icons for header branding
+import { Feather } from "@expo/vector-icons"; // Icons for logout button
 
 
 export default function Index() {
@@ -32,8 +34,15 @@ export default function Index() {
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-        <Text style={styles.t}>Drive</Text>
-        <TouchableOpacity onPress={logout}><Text style={styles.t} >Logout</Text></TouchableOpacity>
+        <View style={styles.logoContainer}>
+          <MaterialIcons name="directions-car" size={26} color="white" />
+          <Text style={styles.t}>Drive</Text>
+        </View>
+
+        <TouchableOpacity onPress={logout} style={styles.logoutButton}>
+          <Feather name="log-out" size={20} color="white" />
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
     </View>
       <View style={styles.mapContainer}>
         <Map />
@@ -53,14 +62,39 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 15,
     alignItems: 'center',
-    backgroundColor:'blue',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    backgroundColor: 'purple',
+    elevation: 5, // Shadow for Android
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+ logoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   t: {
-    color: 'white',
-      fontSize: 18,
-      fontWeight: 'bold',
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: 8, // Space between icon & text
+  },
+  logoutButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ff4757",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  logoutText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+    marginLeft: 6,
   },
   mapContainer: {
     flex: 0.5, 
@@ -69,4 +103,6 @@ const styles = StyleSheet.create({
     flex: 0.5, 
     backgroundColor: '#fff', 
   },
+ 
+  
 });

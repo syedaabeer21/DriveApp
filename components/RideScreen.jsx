@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, FlatList, Text, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { View, TextInput, Button, StyleSheet, FlatList, Text, Image, ScrollView, TouchableOpacity, Modal,Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLocation } from '../config/redux/reducers/locationSlice';
 import carIcon from '../assets/icons/car.png';
@@ -9,6 +9,8 @@ import { db } from '../config/firebase/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../config/firebase/firebaseConfig';
 import { getAddressFromLatLng } from "../src/utils/getAddressFromLatLng";
+import { serverTimestamp } from "firebase/firestore";
+import { ActivityIndicator } from 'react-native'; 
 
 export default function RideBookingScreen() {
     const [destination, setDestination] = useState('');
@@ -16,6 +18,7 @@ export default function RideBookingScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const [distance, setDistance] = useState(null);
     const [selectedVehicle, setSelectedVehicle] = useState(null);
+    const [isLoading, setIsLoading] = useState(false); // Add loading state
     const dispatch = useDispatch();
     const selectedLocation = useSelector(state => state.location.location);
     const currentLocation = useSelector(state => state.location.currentLocation);
@@ -94,6 +97,8 @@ export default function RideBookingScreen() {
           alert("Please select a vehicle and destination.");
           return;
         }
+
+        setIsLoading(true); // Start loading
         const pickupAddress = await getAddressFromLatLng(currentLocation.lat, currentLocation.lng);
         const destinationAddress = await getAddressFromLatLng(selectedLocation.lat, selectedLocation.lng);
         const rideData = {
@@ -112,17 +117,20 @@ export default function RideBookingScreen() {
           vehicleType: selectedVehicle.name,
           fare: Math.round(distance * selectedVehicle.rate),
           status: "pending", 
-          timestamp: new Date().toISOString(), 
+          createdAt: serverTimestamp(),
         };
         console.log("Ride Data:", rideData);
         try {
           const docRef = await addDoc(collection(db, "rides"), rideData);
           console.log("Ride booked with ID: ", docRef.id);
-          alert("Ride booked successfully!");
+          Alert.alert("Ride Booked!", "Your ride is booked");
         } catch (error) {
           console.error("Error booking ride: ", error);
           alert("Failed to book ride. Please try again.");
         }
+        finally {
+          setIsLoading(false); // Stop loading after API response
+      }
       };
 
     return (
@@ -183,15 +191,18 @@ export default function RideBookingScreen() {
 
             {/* Book Ride Button */}
             <View style={styles.bookButtonContainer}>
-                <TouchableOpacity
-                    style={styles.bookButton}
-    
-                    onPress={handleBookRide}
-                    disabled={!selectedVehicle}
-                >
+            <TouchableOpacity
+                style={styles.bookButton}
+                onPress={handleBookRide}
+                disabled={isLoading} // Disable button while loading
+            >
+                {isLoading ? ( 
+                    <ActivityIndicator size="small" color="white" /> // Show loader
+                ) : (
                     <Text style={styles.bookButtonText}>Book Ride</Text>
-                </TouchableOpacity>
-            </View>
+                )}
+            </TouchableOpacity>
+        </View>
         </View>
     );
 }
@@ -261,7 +272,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
     },
     bookButton: {
-      backgroundColor: 'blue',
+      backgroundColor: 'purple',
       padding: 15,
       borderRadius: 10,
       alignItems: 'center',
