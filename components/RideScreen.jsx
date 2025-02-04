@@ -26,12 +26,13 @@ export default function RideBookingScreen() {
         { id: 'rickshaw', name: 'Rickshaw', icon: rickshawIcon, rate: 20 },
     ];
 
-    const apiKey = 'AlzaSygG7UsMwA2DOhQ5P588iErobS8CHcarI0g';
+    const apiKey = 'AlzaSyFAxj_bAiwc90VRMjwmpvA2vyxENVfscPx';
 
     const fetchAutocomplete = async (query) => {
         try {
             const response = await fetch(`https://maps.gomaps.pro/maps/api/place/textsearch/json?query=${query}&key=${apiKey}`);
             const data = await response.json();
+
             setPredictions(data.results);
         } catch (error) {
             console.error('Error fetching autocomplete predictions:', error);

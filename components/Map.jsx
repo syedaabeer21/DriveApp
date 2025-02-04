@@ -145,7 +145,7 @@ export default function Map() {
   return (
     <View style={styles.container}>
       {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
-      {loading && <ActivityIndicator size="large" color="#00ff00" />}
+      {loading && <ActivityIndicator size="large" color="blue" style={styles.indicator} />}
       {location && (
         <MapView
          ref={mapRef} 
@@ -183,7 +183,9 @@ export default function Map() {
           )}
         </MapView>
       )}
-      <Button onPress={getDirection} title="Get Direction" color="#841584" />
+      <View style={styles.btn}>
+        <Button onPress={getDirection} title="Get Direction" color="#841584"  />
+      </View>
     </View>
   );
 }
@@ -201,4 +203,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  indicator: {
+    marginTop:'40%'
+  },
+  btn:{
+    position:'absolute',
+    bottom:0,
+    width:'100%'
+  }
 });

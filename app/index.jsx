@@ -32,7 +32,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-        <Text style={styles.t}>riderApp</Text>
+        <Text style={styles.t}>Drive</Text>
         <TouchableOpacity onPress={logout}><Text style={styles.t} >Logout</Text></TouchableOpacity>
     </View>
       <View style={styles.mapContainer}>
